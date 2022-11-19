@@ -1,0 +1,178 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-image: url('./../image/background.jpg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.back {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #fff;
+    opacity: 0.4;
+    z-index: -1;
+}
+
+.panel {
+    width: 50vw;
+    height: 100vh;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    overflow: auto;
+}
+
+.card {
+    margin: 10px;
+    border-radius: 15px;
+    padding: 5px;
+    padding-bottom: 20px;
+}
+
+.title {
+    font-size: 1.3em;
+    color: #fff;
+}
+
+.bar {
+    height: 2px;
+    width: 100%;
+    background-color: white;
+}
+
+.time {
+    color: #fff;
+    position: relative;
+    right: -87%;
+    top: -20px;
+    display: inline;
+}
+
+.content {
+    color: #fff;
+}
+
+.button {
+    position: fixed;
+    bottom: 20px;
+    left: 70%;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: rgb(0, 191, 255);
+    font-size: 40px;
+    text-align: center;
+    line-height:40px;
+    color: white;
+    border-radius: 20px;
+    box-shadow: 0px 0px 5px rgb(53, 238, 255);
+    cursor: pointer;
+    transition: transform 0.5s linear;
+}
+
+.button:hover {
+    box-shadow: 2px 2px 20px rgb(53, 238, 255);
+}
+
+.dialog {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 550px);
+    top: 20%;
+    background-color: rgba(173, 173, 173, 0.5);
+    padding: 40px;
+    width: 600px;
+    height: 350px;
+    /* box-shadow: 5px 5px 8px #fff; */
+    border-radius: 20px;
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    transition: transform 0.5s ease;
+}
+
+.colors {
+    text-align: center;
+}
+
+.color {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    border-radius: 17px;
+    margin-left: 10px;
+    border: 2px rgba(255,255,255,0) solid;
+    cursor: pointer;
+}
+
+.colorTitle {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    font-size: 1em;
+    position: absolute;
+    left: 40px;
+}
+
+.nameTitle {
+    padding-bottom: 10px;
+}
+
+input {
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    padding: 5px;
+}
+
+.textTitle {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#textarea {
+    resize: none;
+    width: 100%;
+    height: 160px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 10px;
+}
+
+button {
+    width: 70px;
+    height: 30px;
+    outline: none;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.confirm {
+    background-color: #00bfff;
+    color: white;
+}
+
+.cancel {
+    background-color: #ff9292;
+    color: white;
+}

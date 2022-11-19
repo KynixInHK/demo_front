@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吐槽大会</title>
+    <link rel="stylesheet" href="./styles/index.css">
+    <script src="./script/jquery-3.6.1.js"></script>
+</head>
+<body>
+    <div class="back">
+    </div>
+    <div class="panel">
+    </div>
+
+    <div class="button" onclick="showDialog()">
+        +
+    </div>
+
+    <div class="dialog">
+        <div class="colors">
+            <div class="colorTitle">标签颜色：</div>
+            <div id="red" class="color" style="background-color: rgb(255, 0, 0); border: 2px rgb(0,0,0) solid;" onclick="changeColor(id)"></div>
+            <div id="blue" class="color" style="background-color: rgb(0, 128, 255);" onclick="changeColor(id)"></div>
+            <div id="green" class="color" style="background-color: rgb(173, 255, 47);" onclick="changeColor(id)"></div>
+            <div id="yellow" class="color" style="background-color: rgb(255, 247, 0);" onclick="changeColor(id)"></div>
+        </div>
+
+        <div class="name">
+            <div class="nameTitle">昵称：</div>
+            <input type="text" placeholder="请输入您的昵称" id="nickname" maxlength="10" oninput="inputNickname()">
+        </div>
+
+        <div class="text">
+            <div class="textTitle">文本：</div>
+        </div>
+        <textarea name="text" id="textarea" placeholder="请输入内容..." oninput="inputText()"></textarea>
+        <div class="buttons">
+            <button class="confirm" onclick="submit()">确认</button>
+            <button class="cancel" onclick="showDialog()">取消</button>
+        </div>
+    </div>
+
+    <script>
+        let panel = document.getElementsByClassName('panel')[0]
+        let timer = new Date()
+        let datas = {
+            color: 'rgba(255,0,0,0.5)',
+            nickname: '',
+            content: '',
+            time: timer.getFullYear() + '-' + timer.getMonth() + '-' + timer.getDate()
+        }
+        $.ajax({
+            url: 'http://82.157.69.44:3000/query',
+            type: 'GET',
+            success: (res) => {
+                for(let i = 0;i < res.length; i++) {
+                    let card = document.createElement('div')
+                    card.className = 'card'
+                    card.style.backgroundColor = res[i].color
+
+                    let title = document.createElement('div')
+                    title.className = 'title'
+                    title.innerHTML = res[i].nickname
+                    
+                    let bar = document.createElement('div')
+                    bar.className = 'bar'
+
+                    let time = document.createElement('div')
+                    time.className = 'time'
+                    time.innerHTML = res[i].time
+
+                    let content = document.createElement('div')
+                    content.className = 'content'
+                    content.innerHTML = res[i].content
+
+                    card.appendChild(title)
+                    card.appendChild(bar)
+                    card.appendChild(time)
+                    card.appendChild(content)
+                    panel.appendChild(card)
+                }
+            },
+            error: (err) => {
+                console.log(err)
+            }
+        })
+
+        let colorList = [
+            'rgba(255,0,0,0.5)',
+            'rgba(0,128,255,0.5)',
+            'rgb(173,255,47)',
+            'rgba(255,247,0, 0.5)'
+        ]
+        const changeColor = (id) => {
+            let colors = document.getElementsByClassName('color')
+            let color = document.getElementById(id)
+            for(let i = 0;i < colors.length; i++) {
+                colors[i].style.border = '2px rgba(255,255,255,0) solid'
+            }
+            color.style.border = '2px rgb(0,0,0) solid'
+            switch(id) {
+                case 'red': datas.color = colorList[0]; break
+                case 'blue': datas.color = colorList[1]; break
+                case 'green': datas.color = colorList[2]; break
+                case 'yellow': datas.color = colorList[3]; break
+            }
+            console.log(datas.color)
+        }
+
+        let show_dialog = false
+        const showDialog = () => {
+            let dialog = document.getElementsByClassName('dialog')[0]
+            let button = document.getElementsByClassName('button')[0]
+            if(show_dialog === false) {
+                dialog.style.transform = 'translate(-50%, 0)'
+                button.style.transform = 'rotate(45deg)'
+                show_dialog = true
+            } else {
+                dialog.style.transform = 'translate(-50%, 550px)'
+                button.style.transform = 'rotate(0)'
+                show_dialog = false
+            }
+        }
+
+        const inputNickname = () => {
+            let nickname = document.getElementById('nickname').value
+            datas.nickname = nickname
+            // console.log(datas.nickname)
+        }
+
+        const inputText = () => {
+            let text = document.getElementById('textarea').value
+            datas.content = text
+            console.log(datas)
+        }
+
+        const submit = () => {
+            if(datas.nickname === '' || datas.content === '') {
+                alert('昵称或者文本不能为空！')
+            }else {
+                $.ajax({
+                    url: 'http://82.157.69.44:3000/insert',
+                    type: 'POST',
+                    data: datas,
+                    dataType: 'json',
+                    success: (res) => {
+                        console.log(res)
+                    },
+                    error: (err) => {
+                        console.log(err)
+                        location.reload()
+                    }
+                })
+            }
+        }
+    </script>
+</body>
+</html>
